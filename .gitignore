@@ -1,0 +1,35 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# IDE files
+.idea/
+.vscode/
+
+# Persistent application data
+*.pkl
+*.pickle
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Python packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Python tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

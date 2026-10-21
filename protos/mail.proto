@@ -1,0 +1,83 @@
+syntax = "proto3";
+package clienteservidor;
+
+
+/*Entre los servicios que se deben de manejar, debe haber uno que se encargue del 
+login. Este debe recibir un usario y comtrasena, y regresar un estado
+Otro metodo debe servir para enviar mails
+    Este regresa un Status, y recibe un usuario (destino)
+    y contenido del mesnaje
+Otro para leer mails
+otro para borrar
+El servidor debe de poder registar usuarios
+
+
+*/
+
+service Correo{
+    rpc RegistrarUsuario(RegistroUsuario) returns (Status){};
+    rpc Login_Usuario (LoginUsuario) returns (Status);
+    rpc Enviar_Correo(Correos) returns (Status);
+     //regresa varios mails es como solicitar ver bandeja
+    rpc Leer_Correo(Usuario) returns (stream Correos);
+    /*acrualizar envia un id que el servidor usara para actuliazar la bandeja y cambiar el correo
+    de su estado False inicial (no liedo) a estado True*/
+    rpc actualizar(Usuario) returns (stream Correos);
+    rpc borrar(Usuario) returns (stream Correos);
+    /*creo que pondre un rpc que sea actualizar bandeja, este manda stream de correos
+    con el estado cambiado a TRue si el cliente lo abrio*/
+    rpc actualizar_bandeja(stream Correos) returns (Status);
+    /*bandeSalida manda nombre de usuario y recibe bandeja de salida en forma de stream de correos*/
+    rpc bandejaSalida(Usuario) returns (stream Correos);
+    //rpc  AuthenticationRequest(HelloRequest) returns (HelloReply){};
+    //rpc  AuthenticationRequest2(HelloRequest) returns (HelloReply){};
+
+   
+    //rpc listado_productos (Empty) returns (stream Producto) {};
+    
+    //rpc Borrar_Mail(RegistroAsignacion) returns (Status);  
+}
+/*message HelloRequest{
+    optional string name=1;//el 1 es orden
+    optional string lugar=2;
+    optional int32 anio=3;
+    optional int32 contra=4;
+
+}
+
+message HelloReply{
+    optional string message = 1;
+}*/
+//message Empty{}
+/*El registro*/
+message RegistroUsuario {
+    
+    optional string nombre = 1;
+    optional int32 contra = 2;
+     
+}
+
+message Usuario {
+    
+    optional string nombre = 1;
+    optional int32 id = 2;
+     
+}
+/*El login*/
+message LoginUsuario {
+    optional string nombre = 1;
+    optional int32 contra = 2;
+     
+}
+message Correos {
+    optional string nombreDest = 1;
+    optional string contenido = 2;
+    optional string nombreRemitente=3;
+    optional bool estado=4; //para saber si esta leido o no
+    optional string tema=5;
+    optional int32 id=6;    
+}
+
+message Status{
+    optional bool success=1;
+}
